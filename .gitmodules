@@ -1,0 +1,3 @@
+[submodule "SfM_RGBD"]
+	path = SfM_RGBD
+	url = https://github.com/swook/SfM
