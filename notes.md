@@ -23,8 +23,10 @@ sudo apt-get install doxygen
 Followed the instructions [here](https://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/) to install version 3.1.0
 
 ## PCL
-Compile PCL 1.8.1 from source. Need to compile VTK from source too (Used VTK-7.1.1 due to OpenGL errors on parallels).
-Also, ccmake required to configure the PCL installation.
+Compile PCL 1.8.1 from source. 
+
+- Need to compile VTK from source too (Used VTK-7.1.1 due to OpenGL errors on parallels).
+- Also, ccmake required to configure the PCL installation.
 
 ## Ceres
 Followed instructions [here](http://ceres-solver.org/installation.html#linux)
