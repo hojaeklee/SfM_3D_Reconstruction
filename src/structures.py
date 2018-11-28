@@ -1,9 +1,10 @@
 import numpy as np
 import cv2 as cv
 
-'''
+"""
 Information related to RGB-D pair images
-'''
+"""
+
 class Image:
 	def __init__(self):
 		self.index = 0			# index of frame
