@@ -5,7 +5,7 @@ This file contains information from:
 """
 
 import structures
-import utils
+import util
 
 class Associativity:
 	"""Associativity of cameras (matching features, essentially camera pairs)"""

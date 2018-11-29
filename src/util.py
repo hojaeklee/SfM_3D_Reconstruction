@@ -9,7 +9,9 @@ def showImage(title, img):
 	cv.imshow(title, img)
 
 def showImageAndWait(title, img):
-	pass
+	showImage(title, img)
+	print("Press any key to continue...")
+	cv.waitKey(0)
 
 def backproject3D(x, y, depth, m_cameraMatrix):
 	pass
@@ -21,8 +23,8 @@ def backproject3D(x, y, depth, m_cameraMatrix):
 ##
 class Logger(logging.LoggerAdapter):
 	def _log(_namespace):
-		self.logger = logging.getLogger(_namespace)
-		return self.logger
+		logger = logging.getLogger(_namespace)
+		return logger
 	def tok():
 		pass
 
