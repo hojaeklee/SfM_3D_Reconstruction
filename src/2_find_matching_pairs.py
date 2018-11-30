@@ -79,6 +79,7 @@ def find_matching_pairs(images, camframes, descriptors_vec, pairs):
 			print("Match {}-{}".format(i, j))
 			util.showImageAndWait("Match results", out)
 
+	return pairs, camframes
 
 
 if __name__ == "__main__":

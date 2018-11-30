@@ -14,7 +14,15 @@ def showImageAndWait(title, img):
 	cv.waitKey(0)
 
 def backproject3D(x, y, depth, m_cameraMatrix):
-	pass
+	p = np.array([[x], [y], [1.0]])
+	# print("Depth is: {}".format(depth))
+	# print("Depth shape is: {}".format(depth.shape))
+
+	# print("Shape of camM: {}".format(m_cameraMatrix.shape))
+	# print("Shape of p: {}".format(p.shape))
+
+	new_point = depth * np.matmul(np.linalg.inv(m_cameraMatrix), p)
+	return new_point
 
 ###
 # Custom logger, instantiate with namespace string to prefix messages with.
@@ -35,10 +43,26 @@ def quat2R(q):
 	pass
 
 def checkCoherentRotation(R):
-	pass
+	if(np.abs(np.linalg.det(R)) - 1.0 > 1e-05):
+		return false
+	return true
 
 def checkCoherent(q0, q1):
-	pass
+	q0_normed = cv.normalize(q0, None)
+	q1_normed = cv.normalize(q1, None)
+
+	print("q0_normed: {}".format(q0_normed))
+	print("q1_normed: {}".format(q1_normed))
+
+	if cv.norm(q1_normed - q0_normed) > 0.2:
+		print(cv.norm(q1_normed + q0_normed))
+		print("Here?")
+		return False
+
+	if cv.norm(q0) - cv.norm(q1) > 0.2 or cv.norm(q0) - cv.norm(q1) < -0.2:
+		return False
+
+	return True
 		
 if __name__ == "__main__":
 	print("In util.py")

@@ -2,6 +2,7 @@ import os
 import re
 
 import numpy as np
+from skimage import img_as_float
 import cv2 as cv 
 from cv2 import xphoto
 
@@ -55,6 +56,7 @@ def load_images(folder_path, images):
 		rgb_img = cv.imread(rgb_path)
 		# _depth_img = cv.imread(dep_path, cv.IMREAD_ANYDEPTH) # load 16bit img; 2 refers to CV_LOAD_IMAGE_ANYDEPTH
 		_depth_img = cv.imread(dep_path, 2)
+		
 		'''
 		print("before type: {}".format(_depth_img.dtype))
 		print("Depth_max {}".format(np.max(_depth_img)))
@@ -81,7 +83,9 @@ def load_images(folder_path, images):
 
 		## Convert depth map to floats
 		# depth_img = (_depth_img.astype(float)) / 65535
-		depth_img = np.float32(_depth_img) 
+		# depth_img = img_as_float(_depth_img) 
+		depth_img = np.float32(_depth_img)
+
 		'''
 		print("after type: {}".format(depth_img.dtype))
 		print("After max {}".format(np.max(depth_img)))
