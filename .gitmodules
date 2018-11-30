@@ -1,3 +1,6 @@
 [submodule "SfM_RGBD"]
 	path = SfM_RGBD
 	url = https://github.com/swook/SfM
+[submodule "demon"]
+	path = demon
+	url = https://github.com/lmb-freiburg/demon
