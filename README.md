@@ -1,5 +1,38 @@
-# Structure from Motion
-RGB-D structure from motion with DeMoN predicted Depth information. 
+# Structure from Motion using learned depth and motion
+RGB-D structure from motion with DeMoN predicted depth, rotation, and translation information. 
+
+# Overview and abstract
+DeMoN - "Depth and Motion Network for Learning Monocular Stereo" is an end-to-end convolutional network which estimates depth, camera motion, optical flow from successive image pairs. In contrast to networks which estimate depth from single image, DeMoN has learned to exploit matching between image pairs and motion parallax which provides better generality to structures not seen during training. 
+
+## DeMoN Architecture
+- Chain of three networks with internal encoder-decoder subnetworks
+    - Bootstrap Network 
+        - a series of two encoder-decoder networks which inputs image pair and outputs initial depth and motion estimate
+        - Encoder 1
+            - convolutional layers with 1D filters in y,x directions
+            - gradually reduce spatial resolution with stride of 2 while increasing channels
+        - Decoder 1
+            - outputs the optical flow estimate using encoder output/representation
+            - a series of up-convolutional layers with stride 2 followed by two convolutional layers
+        - Encoder 2 / Decoder 2
+            - same architecture as encoder/decoder 1 with 3 fully connected layers which compute camera motion and scaling factor for depth prediction. There is an inherent connection between depth and motion predicitons due to scale ambiguity. 
+            - inputs optical flow + confidence estimate from first encoder/decoder, the image pair, and the second image warped with the estimated flow field
+            - outputs are estimates of depth, surface normals, and camera motion
+        
+    - Iterative Network
+        - trained to improve existing depth, normal, and motion estimates through interative estimation. Bootstrap network fails to accurately estimate the scale of the depth. Iterations refine depth prediction and improve the scale of depth values.
+        - architecture is identical to bootstrap network, except with additional inputs to the encoder networks
+        - encoder1 
+            - additional input = optical flow field estimated from depthmap and camera motion ouput of bootstrap or previous interation?
+        - encoder2 
+            - additional input = depth map estimated from camera motion + optical flow prediction
+    - Refinement Network 
+        - previous networks operate at 64x48 resolution to reduce parameters and reduce training and test time
+        - refinement net upscales the predictions to full input image resolution (256x192, 4:3 ratio)
+        - Input is full resolution input image and nearest neighbor upsampled depth and normal field
+
+
+    - 
 
 # Roadmap
 - [ ] RGB-D SfM in python
@@ -29,7 +62,15 @@ SFM standard pipeline:
 - Calibration parameters (intrinsic & distortion)
 - Evaluate on test dataset
 
+# Using Demon
+- Photos used in demon must be undistorted and rectified using the camera calibration matrix and a function such as OpenCV's /home/grohbot/Downloads/bm1/intrinsics.txt
+- 
+
+
 # Running Demon
+- input resolution 256x192 , 4x3 ratio
+
+
 ## Requirements
 - tensorflow 1.4.0
 - cmake 3.7.1
