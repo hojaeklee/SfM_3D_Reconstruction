@@ -69,7 +69,11 @@ SFM standard pipeline:
 
 # Using Demon
 - Photos used in demon must be undistorted and rectified using the camera calibration matrix and a function such as OpenCV's 
-- 
+```
+570.3422047415297129191458225250244140625 0 320
+0 570.3422047415297129191458225250244140625 240
+0 0 1
+```
 
 # Running Demon
 - input resolution 256x192 , 4x3 ratio
