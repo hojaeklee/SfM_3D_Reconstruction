@@ -2,7 +2,11 @@
 RGB-D structure from motion with DeMoN predicted depth, rotation, and translation information. 
 
 # Overview and abstract
-DeMoN - "Depth and Motion Network for Learning Monocular Stereo" is an end-to-end convolutional network which estimates depth, camera motion, optical flow from successive image pairs. In contrast to networks which estimate depth from single image, DeMoN has learned to exploit matching between image pairs and motion parallax which provides better generality to structures not seen during training. 
+DeMoN - "Depth and Motion Network for Learning Monocular Stereo" is an end-to-end convolutional network which estimates depth, camera motion, optical flow from successive image pairs. In contrast to networks which estimate depth from single image, DeMoN has learned to exploit matching between image pairs and motion parallax which provides better generality to structures not seen during training. DeMoN outperforms classic structure from motion pipelines, by a factor of 1.5 to 2 in the Sun3D, NYUv2, Scenes11, RGB-D SLAM, and MVS datasets. 
+
+Classic Pipleline 
+SIFT-> FlowFields Optical Flow -> Essential Matrix via 8pt algorithm + RANSAC -> 
+-> Plane sweep stereo ->
 
 ## DeMoN Architecture
 - Chain of three networks with internal encoder-decoder subnetworks
@@ -36,8 +40,9 @@ DeMoN - "Depth and Motion Network for Learning Monocular Stereo" is an end-to-en
 
 # Roadmap
 - [ ] RGB-D SfM in python
-- [ ] Depth Estimation from DeMoN
+- [ ] Depth + Pose Estimation from DeMoN
 - [ ] Combine the results
+- [ ] Data Capture and formatting of scene for Reconstruction
 - Enhancement: Integrate DeMoN pose estimation in place of Registration step
 
 # RGBD SFM Pipeline
@@ -56,16 +61,15 @@ SFM standard pipeline:
 - Util functions:
 
 # DeMoN > Alex
-
 - Use pretrained weights (Filetype)
 - Collect test dataset
+- Format dataset - scale to use camera instrinsics in SUN3d
 - Calibration parameters (intrinsic & distortion)
 - Evaluate on test dataset
 
 # Using Demon
-- Photos used in demon must be undistorted and rectified using the camera calibration matrix and a function such as OpenCV's /home/grohbot/Downloads/bm1/intrinsics.txt
+- Photos used in demon must be undistorted and rectified using the camera calibration matrix and a function such as OpenCV's 
 - 
-
 
 # Running Demon
 - input resolution 256x192 , 4x3 ratio
