@@ -5,7 +5,7 @@ import util
 import structures
 
 def glo_cam_poses(images, cameraPoses, pairs, tree):
-	print("Step 5 (global)")
+	print("\nStep 5 (global)")
 
 	## Add I for R, t of 0th camera
 	## (Reference for "global" coordinate frame)

@@ -5,23 +5,29 @@ import pcl
 import util
 
 class viewer:
-	def __init__(self, title):
-		print("PCL")
+	def __init__(self, title, low_thresh = 400, high_thresh = 8000):
+		print("\nPCL")
 		self._title = title
+		self.low_thresh = low_thresh
+		self.high_thresh = high_thresh
 
 	def reduceCloud(self, cloud):
-		pass
+		voxel_resolution = 20.0
+		sor = pcl.VoxelGridFilter_PointXYZRGBA(cloud)
+		# sor.setInputCloud(cloud)
+		sor.set_leaf_size(voxel_resolution, voxel_resolution, voxel_resolution)
+
+		reduc = sor.filter()
+		return reduc
 
 	def createPointCloud(self, images, poses, cameraMatrix):
 		## Fill cloud structure
 		# pcl_points = pcl.PointCloud()
 
 		## Per camera
-		pcl_p = pcl.PointCloud_PointXYZRGB()
-		all_points = np.zeros(shape = (2, 4), dtype = np.float32)
-		
-		print("Len of poses: {}".format(poses))
-		
+		pcl_p = pcl.PointCloud_PointXYZRGBA()
+		all_points = np.zeros(shape = (1, 4), dtype = np.float32)
+				
 		bad_depths = []
 		for c in range(len(poses)):
 			image = images[c]
@@ -30,9 +36,7 @@ class viewer:
 
 			if R.size == 0:
 				continue
-
-			print("Image.dep.shape[0]: {}".format(image.dep.shape[0]))
-			print("Image.dep.shape[1]: {}".format(image.dep.shape[1]))
+			
 			for i in range(image.dep.shape[0]):
 				rgbs = image.rgb[i]
 				deps = image.dep[i]
@@ -41,32 +45,24 @@ class viewer:
 					rgb = rgbs[j]
 					dep = deps[j]
 
-					if dep < 400 or dep > 8000:
+					if dep < self.low_thresh or dep > self.high_thresh:
 						bad_depths.append(dep)
-						#print(j * i)
 						continue
-
-					# print("dep: {}".format(dep))
 
 					point = util.backproject3D(j, i, dep, cameraMatrix)
 					gPoint = np.transpose(R) @ point - t
 					point = gPoint
 
-					point_ext = np.array([[point[0][0], point[1][0], point[2][0], 255.0]], dtype = np.float32)
-					rgb_ext = np.array([[rgb[2], rgb[1], rgb[0], 255.0]], dtype = np.float32)
-					# print(rgb_ext)
-					single_point = np.concatenate((point_ext, rgb_ext), axis = 0)
+					rgb_temp = rgb[2] << 16 | rgb[1] << 8 | rgb[0] 
+					point_ext = np.array([[point[0][0], point[1][0], point[2][0], rgb_temp]], dtype = np.float32)
+					single_point = point_ext
 
-				all_points = np.concatenate((all_points, single_point), axis = 0)
+					all_points = np.concatenate((all_points, single_point), axis = 0)
 			
 		pcl_p.from_array(all_points)
+		# pcl_p_reduced = self.reduceCloud(pcl_p)
 
-			## Reduce points every 10 cameras
-
-
-		## Final reduction of points
-		print("Bad Depths: {}".format(len(bad_depths)))
-		print("Generated {} points.".format(all_points.shape[0]))
+		print("Generated {} points.".format(len(pcl_p.to_list())))
 		return pcl_p
 
 	def saveCloud(self, pcl_points, fname):

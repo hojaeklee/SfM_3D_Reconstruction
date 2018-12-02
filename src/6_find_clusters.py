@@ -6,7 +6,7 @@ import util
 import structures
 
 def find_clusters(assocMat, cameraPoses, camFrames, pointClusters, pointMap, cameraMatrix, pairs):
-	print("Step 6 (clusters)")
+	print("\nStep 6 (clusters)")
 
 	## Function when walking through the pair tree
 	
@@ -18,7 +18,6 @@ def find_clusters(assocMat, cameraPoses, camFrames, pointClusters, pointMap, cam
 
 		## Find index of other side of pair
 		if pair.pair_index[0] == j:
-			print("==j")
 			kpIdx_i = pair.matched_indices[1]
 			keypoints_i = pair.matched_points[1]
 			depths_i = pair.pair_depths[1]
@@ -27,7 +26,6 @@ def find_clusters(assocMat, cameraPoses, camFrames, pointClusters, pointMap, cam
 			keypoints_j = pair.matched_points[0]
 			depths_j = pair.pair_depths[0]
 		else:
-			print("==i")
 			kpIdx_i = pair.matched_indices[0]
 			keypoints_i = pair.matched_points[0]
 			depths_i = pair.pair_depths[0]

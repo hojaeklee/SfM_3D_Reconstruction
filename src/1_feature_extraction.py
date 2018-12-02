@@ -6,7 +6,7 @@ import cv2 as cv
 import structures
 
 def extract_features(images, cam_Frames, descriptors_vec):
-	print("Step 1 (features)")
+	print("\nStep 1 (features)")
 
 	n = len(images)
 	cam_Frames = [] 
@@ -20,7 +20,11 @@ def extract_features(images, cam_Frames, descriptors_vec):
 	edge_threshold = 4.0
 	sigma = 1.6
 
+	## BeersNMore
 	sift = cv.xfeatures2d.SIFT_create(feature_num, octavelayers_num, contrast_thresh, edge_threshold, sigma)
+
+	## Bm1
+	# sift = cv.xfeatures2d.SIFT_create(nOctaveLayers = 20)
 
 	for i in range(n):
 		image = images[i]
@@ -38,13 +42,12 @@ def extract_features(images, cam_Frames, descriptors_vec):
 			d = image.dep[np.int(key_points[k].pt[1]), np.int(key_points[k].pt[0])]
 			
 
-			if d < 400.0 or d > 8000:
+			if d < 400.0 or d > 50000:
 				continue
 			else:
 				keep_key_points.append(key_points[k])
 				keep_descriptors.append(descriptors[k,])
 				keep_depths.append(d)
-				print("depth before: {}".format(d))
 
 		# print("# keep_key_points: {}".format(len(keep_key_points)))
 		
@@ -52,9 +55,6 @@ def extract_features(images, cam_Frames, descriptors_vec):
 		cam_Frames.append(structures.CamFrame(i, keep_key_points, keep_depths))
 		descriptors_vec.append(keep_descriptors)
 
-		print("************")
-		print("length of keep_depths: {}".format(len(keep_depths)))
-		print("************")
 		print("Found {} key points in image {}".format(len(keep_key_points), i))
 
 	return images, cam_Frames, descriptors_vec

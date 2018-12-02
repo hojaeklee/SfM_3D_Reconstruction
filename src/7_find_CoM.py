@@ -4,7 +4,7 @@ from Associativity import associativity
 import util
 
 def find_CoM(pointClusters, pointCloud):
-	print("Step 7 (global)")
+	print("\nStep 7 (global)")
 	print("cluster number = {}".format(len(pointClusters)))	
 
 	# print(pointClusters[0])

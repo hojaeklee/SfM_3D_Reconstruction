@@ -11,11 +11,19 @@ from util import Logger
 from Associativity import associativity
 from Viewer import viewer
 
+## BeersNMore
 _intrinsic_array = np.array([524, 0, 316.7, 0, 524, 238.5, 0, 0, 1])
 _discoeff_array = np.array([0.2402, -0.6861, -0.0015, 0.0003])
+low_thresh = 400
+high_thresh = 8000
+
+## Bm1 and Harvard
+_intrinsic_array = np.array([570.34, 0, 320, 0, 570.34, 240, 0, 0, 1])
+low_thresh = 800 
+high_thresh = 35000 
 
 class Pipeline:
-	def __init__(self, _folder_path):
+	def __init__(self, _folder_path, _filename):
 		self.folder_path = _folder_path
 		self.cameraMatrix = np.reshape(_intrinsic_array, (3, 3))
 		self.distCoeffs = np.reshape(_discoeff_array, (1, 4))
@@ -28,6 +36,10 @@ class Pipeline:
 		self.find_clust = importlib.import_module("6_find_clusters")
 		self.findCoM = importlib.import_module("7_find_CoM")
 		self.BA = importlib.import_module("8_bundle_adjustment")
+
+		self.low_thresh = low_thresh
+		self.high_thresh = high_thresh
+		self.filename = _filename
 
 	def run(self, save_clouds, show_clouds):
 		"""
@@ -63,13 +75,11 @@ class Pipeline:
 		##
 		image_pairs = []
 		image_pairs, cam_Frames = self.find_matching_pairs.find_matching_pairs(images, cam_Frames, descriptors_vec, image_pairs)
-
-
+		
 		###
 		# Stage 3: Compute pairwise R and t
 		##
 		image_pairs, cam_Frames = self.registration.register_camera(image_pairs, cam_Frames, self.cameraMatrix, self.distCoeffs)
-
 
 		###
 		# Stage 4: Construct associativity matrix and spannign tree
@@ -113,11 +123,11 @@ class Pipeline:
 		pointCloud = self.findCoM.find_CoM(pointClusters, pointCloud)
 
 		## Save cloud before BA
-		view = viewer("Before BA")
+		view = viewer("Before BA", self.low_thresh, self.high_thresh)
 		cloud = view.createPointCloud(images, gCameraPoses, self.cameraMatrix)
 		# n = len(clouds.points)
 		# folder = os.current_dir()
-		fname = "./test.pcd"
+		fname = "./" + self.filename + ".pcd"
 
 		# if save_clouds:
 		view.saveCloud(cloud, fname)
@@ -126,11 +136,11 @@ class Pipeline:
 		###
 		# Stage 8: Bundle Adjustment
 		## 
-		_placeholder = self.BA.bundle_adjustment(pointMap, cam_Frames, False, gCameraPoses, pointCloud)
+		# _placeholder = self.BA.bundle_adjustment(pointMap, cam_Frames, False, gCameraPoses, pointCloud)
 
 
 		## Show calculated pointcloud
-
+		
 
 
 if __name__ == "__main__":

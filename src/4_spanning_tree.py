@@ -4,7 +4,7 @@ from Associativity import associativity
 import util
 
 def build_spanning_tree(pairs, assocMat, tree):
-	print("Step 4 (spanning)")
+	print("\nStep 4 (spanning)")
 	old_n = assocMat.n
 
 	'''

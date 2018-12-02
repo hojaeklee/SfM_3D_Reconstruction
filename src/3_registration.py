@@ -12,7 +12,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import util
 
 def register_camera(pairs, cam_Frames, cameraMatrix, distCoeffs):
-	print("Step 3 (register)")
+	print("\nStep 3 (register)")
 	
 	## ------- Parameters for solvePnPRansac ------- ##
 	useExtrinsicGuess = False
