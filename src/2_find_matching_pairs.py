@@ -70,8 +70,10 @@ def find_matching_pairs(images, camframes, descriptors_vec, pairs):
 				pair = structures.ImagePair((i, j), (matched_keypoints_i, matched_keypoints_j), (matched_indices_i, matched_indices_j), (depth_values_i, depth_values_j))			
 				pairs.append(pair)
 
+				print("depth_values_i: {}".format(len(depth_values_i)))
+				print("depth_values_j: {}".format(len(depth_values_j)))
 			# Remove continue to see images
-			# continue
+			continue
 			print("{} \t {} \t {}".format(len(camframes[i].key_points), len(camframes[j].key_points), len(matches)))
 			out = cv.drawMatches(images[i].rgb, camframes[i].key_points, \
 							images[j].rgb, camframes[j].key_points, \

@@ -17,9 +17,9 @@ def register_camera(pairs, cam_Frames, cameraMatrix, distCoeffs):
 	## ------- Parameters for solvePnPRansac ------- ##
 	useExtrinsicGuess = False
 	iterationsCount = 1000
-	reprojectionError = 20
+	reprojectionError = 2.5
 
-	confidence = 0.99
+	confidence = 0.999
 	minInliers = 30
 
 	flag = cv.SOLVEPNP_EPNP
@@ -41,11 +41,10 @@ def register_camera(pairs, cam_Frames, cameraMatrix, distCoeffs):
 		points3D_i = []
 		points3D_j = []
 
-		ax = plt.axes(projection = '3d')
 		for k in range(len(keyPoints_i)):
 			x_i = keyPoints_i[k][0]
 			y_i = keyPoints_i[k][1]
-			d_i = depths_i[k]
+			d_i = depths_i[k]		
 
 			## backproject 3D points
 			objPoint_i = util.backproject3D(x_i, y_i, d_i, cameraMatrix)
@@ -58,16 +57,10 @@ def register_camera(pairs, cam_Frames, cameraMatrix, distCoeffs):
 			objPoint_j = util.backproject3D(x_j, y_j, d_j, cameraMatrix)
 			points3D_j.append(objPoint_j)
 
-			
-			x = objPoint_j[0]
-			y = objPoint_j[1]
-			z = objPoint_j[2]
-			ax.scatter3D(x_i, y_i, d_i)
 
-		plt.savefig('myfig_i')
 
-		print("objPoint_i: \n{}".format(objPoint_i))
-		print("points3D_i: \n{}".format(points3D_i[:3]))
+		# print("objPoint_i: \n{}".format(objPoint_i))
+		# print("points3D_i: \n{}".format(points3D_i))
 		## OPENCV:
 		## i provides: model coordinate system
 		## j provides: camera coordinate system
@@ -77,21 +70,27 @@ def register_camera(pairs, cam_Frames, cameraMatrix, distCoeffs):
 
 		## US:
 		## R_ji * p_i = p_j
-		print("Camera Matrix: \n{}".format(cameraMatrix))
-		
+
 		points3D_i = np.array(points3D_i)
-		points3D_i = np.reshape(points3D_i, (points3D_i.shape[0], 1, points3D_i.shape[1]))
-
+		points3D_i = np.squeeze(points3D_i)
+		
+		points3D_ii = np.zeros((points3D_i.shape[0], 1, 3), np.float32)
+		points3D_ii[:, 0, :] = points3D_i[:, :]
+	
+		
 		points3D_j = np.array(points3D_j)
-		points3D_j = np.reshape(points3D_j, (points3D_j.shape[0], 1, points3D_j.shape[1]))
-
+		points3D_j = np.squeeze(points3D_j)
+		
+		points3D_jj = np.zeros((points3D_j.shape[0], 1, 3), np.float32)
+		points3D_jj[:, 0, :] = points3D_j[:, :]
+		
 		keyPoints_i = np.array(keyPoints_i)
 		keyPoints_i = np.reshape(keyPoints_i, (keyPoints_i.shape[0], 1, keyPoints_i.shape[1]))
 
 		keyPoints_j = np.array(keyPoints_j)
 		keyPoints_j = np.reshape(keyPoints_j, (keyPoints_j.shape[0], 1, keyPoints_j.shape[1]))
 		
-		_, rvec_i, tvec_i, inliers_i = cv.solvePnPRansac(points3D_i, keyPoints_i, cameraMatrix, \
+		work_i, rvec_i, tvec_i, inliers_i = cv.solvePnPRansac(points3D_ii, keyPoints_j, cameraMatrix, \
 								distCoeffs = None, \
 								rvec = None, tvec = None, \
 								useExtrinsicGuess = useExtrinsicGuess, \
@@ -101,33 +100,19 @@ def register_camera(pairs, cam_Frames, cameraMatrix, distCoeffs):
 								inliers = None, flags = flag)
 		
 
-		_, rvec_j, tvec_j, inliers_j = cv.solvePnPRansac(points3D_j, keyPoints_j, cameraMatrix, \
-							distCoeffs = None, \
-							rvec = None, tvec = None, \
-							useExtrinsicGuess = useExtrinsicGuess, \
-							iterationsCount = iterationsCount, \
-							reprojectionError = reprojectionError, \
-							confidence = confidence, \
-							inliers = None, flags = flag)
-
-		'''
-		_, rvec_j, tvec_j, inliers_j = cv.solvePnPRansac(points3D_j, keyPoints_j, cameraMatrix, None, 
-								None, None, \
-								useExtrinsicGuess, iterationsCount, reprojectionError, 
-								confidence, inliers = None, flags = flag)
-		'''
-		'''
-		_, rvec_i, tvec_i = cv.solvePnP(points3D_i, keyPoints_i, cameraMatrix, None, 
-								None, None, \
-								useExtrinsicGuess,flags = flag)
+		work_j, rvec_j, tvec_j, inliers_j = cv.solvePnPRansac(points3D_jj, keyPoints_i, cameraMatrix, \
+								distCoeffs = None, \
+								rvec = None, tvec = None, \
+								useExtrinsicGuess = useExtrinsicGuess, \
+								iterationsCount = iterationsCount, \
+								reprojectionError = reprojectionError, \
+								confidence = confidence, \
+								inliers = None, flags = flag)
 		
-		_, rvec_j, tvec_j = cv.solvePnP(points3D_j, keyPoints_j, cameraMatrix, None, 
-								None, None, \
-								useExtrinsicGuess,flags = flag)
 		'''
+		print("work_i: {}".format(work_i))
+		print("work_j: {}".format(work_j))
 
-		# print(tvec_i)
-		# print(tvec_j)
 		print("rvec_i: \n{}".format(rvec_i))
 		print("rvec_j: \n{}".format(rvec_j))
 
@@ -136,12 +121,13 @@ def register_camera(pairs, cam_Frames, cameraMatrix, distCoeffs):
 
 		print("Inliers_i: {}".format(inliers_i.shape))
 		print("Inliers_j: {}".format(inliers_j.shape))
+		'''
 
 		if (inliers_i.shape[0] < minInliers or inliers_j.shape[0] < minInliers):
 			continue
 		
 
-		# print("{}/{} inliers for {}-{} pair.".format(inliers_i.shape[0], inliers_j.shape[0], i, j))
+		print("{}/{} inliers for {}-{} pair.".format(inliers_i.shape[0], inliers_j.shape[0], i, j))
 
 		## Convert rvec and tvec to floats
 		tvec_i = np.float32(tvec_i)
@@ -152,21 +138,47 @@ def register_camera(pairs, cam_Frames, cameraMatrix, distCoeffs):
 		## Average R_i & R_j and t_i & t_j
 		rvec = (rvec_i - rvec_j) / 2.0
 		tvec = tvec_i
-		R = cv.Rodrigues(rvec)
-
-		print("***************")
-
-		print("rvec_i: {}".format(rvec_i))
-		print("rvec_j: {}".format(rvec_j))
+		R = cv.Rodrigues(rvec)[0]
 
 		if not util.checkCoherent(rvec_i, rvec_j):
 			print("Invalid r in {}-{}, this pair is skipped!".format(i, j))
 			continue
 		
+		## Store, R, t
+		pair.R = R
+		pair.t = tvec
 
+		# New vectors to retain only inliers info
+		new_matched_indices_i = []
+		new_matched_indices_j = []
+		new_matched_kp_i = []
+		new_matched_kp_j = []
+		new_matched_depth_i = []
+		new_matched_depth_j = []
 
-	pass
+		inliers_idx_j = 0
+		inliers_idx_i = 0
 
+		while (inliers_idx_i != inliers_i.shape[0]) and (inliers_idx_j != inliers_j.shape[0]):
+			if inliers_i[inliers_idx_i, 0] < inliers_j[inliers_idx_j, 0]:
+				inliers_idx_i += 1
+			else: 
+				if inliers_j[inliers_idx_j, 0] == inliers_i[inliers_idx_i, 0]:
+					idx = inliers_j[inliers_idx_j, 0]
+					# print(pair.matched_indices[0])
+					new_matched_indices_i.append(pair.matched_indices[0][idx])
+					new_matched_indices_j.append(pair.matched_indices[1][idx])
+					new_matched_kp_i.append(keyPoints_i[idx])
+					new_matched_kp_j.append(keyPoints_j[idx])
+					new_matched_depth_i.append(depths_i[idx])
+					new_matched_depth_j.append(depths_j[idx])
+				inliers_idx_j += 1
+
+		pair.matched_indices = (new_matched_indices_i, new_matched_indices_j)
+		pair.matched_points = (new_matched_kp_i, new_matched_kp_j)
+		pair.pair_depths = (new_matched_depth_i, new_matched_depth_j)
+
+	return pairs, cam_Frames
 
 if __name__ == "__main__":
 	print("In 3_registration.py")

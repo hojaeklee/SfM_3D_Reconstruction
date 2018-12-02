@@ -1,26 +1,18 @@
 import cv2 as cv
-import Pipeline
-import Associativity
+
+from Associativity import associativity
 import util
 
 def find_CoM(pointClusters, pointCloud):
-	"""find_CoM
-	
-	Args:
-		pointClusters
-		pointCloud
-
-	Returns:
-		None
-	"""
 	print("Step 7 (global)")
-	print("cluster number = {}".format(pointClusters.size()))	
+	print("cluster number = {}".format(len(pointClusters)))	
 
-	for c in range(pointClusters.size()):
-		mean_ = cv.reduce(pointClusters[c])
-		# 
-		pointCloud[c] = mean
+	# print(pointClusters[0])
+	for c in range(len(pointClusters)):
+		m = cv.reduce(pointClusters[c][0], 1, cv.REDUCE_AVG)
+		pointCloud.append(m)
 
+	return pointCloud
 	## Skip _log.tok();
 	
 if __name__ == "__main__":

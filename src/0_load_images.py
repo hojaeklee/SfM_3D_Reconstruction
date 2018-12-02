@@ -78,7 +78,7 @@ def load_images(folder_path, images):
 
 
 		## Get grayscale image
-		gray_undist_img = cv.cvtColor(rgb_undist_img, cv.COLOR_BGR2GRAY)
+		gray_undist_img = cv.cvtColor(rgb_undist_img, cv.COLOR_RGB2GRAY)
 
 
 		## Convert depth map to floats

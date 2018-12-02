@@ -6,8 +6,9 @@ This file contains information from:
 
 import structures
 import util
+from queue import *
 
-class Associativity:
+class associativity:
 	"""Associativity of cameras (matching features, essentially camera pairs)"""
 
 	"""
@@ -16,33 +17,30 @@ class Associativity:
 	std::unordered_map<PairIndex, ImagePair*> _map;
 		--> Python dictionary with tuple PairIndex as key and ImagePair* as value
 	"""
-	PairIndex = [0,0]
-	_map = {}
-
-	def __init__(self):
-		self.n = 0
-
-	def __init__(self, _n):
+	def __init__(self, _n = 0):
 		self.n = _n
+		self._map = {}
+		self.PairIndex = (0, 0)
 
-	def __init__(self, i, j):
-		if (i, j) in _map.keys():
-			return _map[(i, j)] # Return value of the key
-		else:
-			_map[makeIndex(i, j)] = None
-			return None # Return value of the created key
-
-	def makeIndex(a, b):
+	def makeIndex(self, a, b):
 		i = min(a, b)
 		j = b if i == a else a
 		return (i, j)
 
-	def getAssociatedPairs(i):
+	def assignPair(self, i, j, pair):
+		if (i, j) in self._map.keys():
+			print("Already in _map")
+			pass
+			# return _map[(i, j)] # Return value of the key
+		else:
+			self._map[self.makeIndex(i, j)] = pair
+			# return None # Return value of the created key
+
+	def getAssociatedPairs(self, i):
 		"""
 		pImagePairs/ImagePairs is an array of ImagePair() objects defined in structure.py
 		ImagePair() is a class defined in structures.py
 		"""
-		
 		pairs = []
 		pair = structures.ImagePair()
 		
@@ -54,9 +52,9 @@ class Associativity:
 
 		return pairs
 
-	def walk(func):
+	def walk(self, func):
 		checked = {}
-
+		pass
 
 
 if __name__ == "__main__":

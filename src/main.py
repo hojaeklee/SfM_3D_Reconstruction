@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
 	folder_path = os.path.abspath(args.data_path)
 	show_clouds = args.show_clouds
-	save_clouds = args.no_save_clouds
+	save_clouds = not args.no_save_clouds
 
 	############
 	# Pipeline #
