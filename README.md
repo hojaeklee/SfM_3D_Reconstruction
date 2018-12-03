@@ -56,8 +56,11 @@ SFM standard pipeline:
 - [x] Global Camera Poses > Hojae
 - [x] Find Clusters > Hojae
 - [x] Find CoM > Hojae
-- [] Bundle Adjustment > TODO
-- [] Viewer: [x]createPointCloud, [x]saveCloud, [x]reduceCloud
+- [ ] Bundle Adjustment > TODO
+- [ ] Viewer
+  - [x] createPointCloud
+  - [x] saveCloud
+  - [ ] reduceCloud
 - [x] Util functions: as needed
 
 # DeMoN > Alex
