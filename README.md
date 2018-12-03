@@ -74,10 +74,8 @@ SFM standard pipeline:
 0 570.3422047415297129191458225250244140625 240
 0 0 1
 ```
-
 # Running Demon
 - input resolution 256x192 , 4x3 ratio
-
 
 ## Requirements
 - tensorflow 1.4.0

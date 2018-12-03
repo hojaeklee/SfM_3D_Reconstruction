@@ -5,7 +5,7 @@ import structures
 import util
 
 def find_matching_pairs(images, camframes, descriptors_vec, pairs):
-	print("Step 2 (matching)")
+	print("\nStep 2 (matching)")
 
 	N = len(descriptors_vec)
 
@@ -34,7 +34,8 @@ def find_matching_pairs(images, camframes, descriptors_vec, pairs):
 
 			## Stop if not enough matches
 			if len(matches) < min_matches:
-				continue
+				# continue
+				pass
 			else:
 				print("Got {} matches for {}-{}".format(len(matches), i, j))
 
@@ -71,7 +72,7 @@ def find_matching_pairs(images, camframes, descriptors_vec, pairs):
 				pairs.append(pair)
 
 			# Remove continue to see images
-			# continue
+			continue
 			print("{} \t {} \t {}".format(len(camframes[i].key_points), len(camframes[j].key_points), len(matches)))
 			out = cv.drawMatches(images[i].rgb, camframes[i].key_points, \
 							images[j].rgb, camframes[j].key_points, \
