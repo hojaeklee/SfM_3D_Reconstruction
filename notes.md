@@ -57,3 +57,5 @@ or comment out dependency on pcl_2d-1.8 in PKG_CONFIG_PATH/pcl_features-1.8.pc
 
 ## Ceres
 Followed instructions [here](http://ceres-solver.org/installation.html#linux)
+Compile PCL 1.8.1 from source. Need to compile VTK from source too (Used VTK-7.1.1 due to OpenGL errors on parallels).
+Also, ccmake required to configure the PCL installation.
