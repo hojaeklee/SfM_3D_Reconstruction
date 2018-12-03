@@ -45,7 +45,9 @@ def find_clusters(assocMat, cameraPoses, camFrames, pointClusters, pointMap, cam
 
 		## for all matching in camera j, get their global coordinate
 		## and insert them in correponding cluster
-
+		
+		# There may be an error here: x_j = keypoints_j[m][0][0], 
+		# TypeError: 'float' object is not subscriptable
 		for m in range(len(keypoints_j)):
 			x_j = keypoints_j[m][0][0]
 			y_j = keypoints_j[m][0][1]

@@ -39,8 +39,8 @@ SIFT-> FlowFields Optical Flow -> Essential Matrix via 8pt algorithm + RANSAC ->
     - 
 
 # Roadmap
-- [ ] RGB-D SfM in python
-- [ ] Depth + Pose Estimation from DeMoN
+- [x] RGB-D SfM in python
+- [x] Depth + Pose Estimation from DeMoN
 - [ ] Combine the results
 - [ ] Data Capture and formatting of scene for Reconstruction
 - Enhancement: Integrate DeMoN pose estimation in place of Registration step
@@ -48,24 +48,24 @@ SIFT-> FlowFields Optical Flow -> Essential Matrix via 8pt algorithm + RANSAC ->
 # RGBD SFM Pipeline
 SFM standard pipeline:
 
-- Step 0: Load Images > Steven
-- Step 1: Feature Extraction > Steven
-- Step 2: Find Matching Pairs > Steven
-- Step 3: Registration > Steven
-- Step 4: Spanning Tree > Hojae
-- Step 5: Global Camera Poses > Hojae
-- Step 6: Find Clusters > Hojae
-- Step 7: Find CoM > Hojae
-- Step 8: Bundle Adjustment > Hojae
-- Viewer:
-- Util functions:
+- [x] Load Images > Steven
+- [x] Feature Extraction > Steven
+- [x] Find Matching Pairs > Steven
+- [x] Registration > Steven
+- [x] Spanning Tree > Hojae
+- [x] Global Camera Poses > Hojae
+- [x] Find Clusters > Hojae
+- [x] Find CoM > Hojae
+- [] Bundle Adjustment > TODO
+- [] Viewer: [x]createPointCloud, [x]saveCloud, [x]reduceCloud
+- [x] Util functions: as needed
 
 # DeMoN > Alex
-- Use pretrained weights (Filetype)
-- Collect test dataset
-- Format dataset - scale to use camera instrinsics in SUN3d
-- Calibration parameters (intrinsic & distortion)
-- Evaluate on test dataset
+- [x] Use pretrained weights (Filetype)
+- [ ] Collect test dataset: Waiting on kinect v1
+- [ ] Format dataset: scale to use camera intrinsics in SUN3D
+- [ ] Calibration parameters (intrinsic & distortion)
+- [x] Evaluate on test dataset
 
 # Using Demon
 - Photos used in demon must be undistorted and rectified using the camera calibration matrix and a function such as OpenCV's 

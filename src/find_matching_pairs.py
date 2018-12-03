@@ -76,7 +76,7 @@ def find_matching_pairs(images, camframes, descriptors_vec, pairs):
 			print("{} \t {} \t {}".format(len(camframes[i].key_points), len(camframes[j].key_points), len(matches)))
 			out = cv.drawMatches(images[i].rgb, camframes[i].key_points, \
 							images[j].rgb, camframes[j].key_points, \
-							matches, None, flags = 4) 
+							matches, None, flags = cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS) 
 			print("Match {}-{}".format(i, j))
 			util.showImageAndWait("Match results", out)
 

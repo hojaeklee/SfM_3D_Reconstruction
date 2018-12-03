@@ -5,7 +5,7 @@ import cv2 as cv
 
 import structures
 
-def extract_features(images, cam_Frames, descriptors_vec):
+def extract_features(images, cam_Frames, descriptors_vec, low_threshold, high_threshold):
 	print("\nStep 1 (features)")
 
 	n = len(images)
@@ -13,7 +13,6 @@ def extract_features(images, cam_Frames, descriptors_vec):
 	descriptors_vec = [] 
 
 	## Create a SIFT detector
-	## Bernhard-checked
 	feature_num = 0 
 	octavelayers_num = 4
 	contrast_thresh = 0.04
@@ -22,9 +21,6 @@ def extract_features(images, cam_Frames, descriptors_vec):
 
 	## BeersNMore
 	sift = cv.xfeatures2d.SIFT_create(feature_num, octavelayers_num, contrast_thresh, edge_threshold, sigma)
-
-	## Bm1
-	# sift = cv.xfeatures2d.SIFT_create(nOctaveLayers = 20)
 
 	for i in range(n):
 		image = images[i]
@@ -42,7 +38,7 @@ def extract_features(images, cam_Frames, descriptors_vec):
 			d = image.dep[np.int(key_points[k].pt[1]), np.int(key_points[k].pt[0])]
 			
 
-			if d < 400.0 or d > 50000:
+			if d < low_threshold or d > high_threshold:
 				continue
 			else:
 				keep_key_points.append(key_points[k])

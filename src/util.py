@@ -3,6 +3,9 @@ import numpy as np
 import cv2 as cv
 import structures
 
+import sys
+import yaml
+
 def showImage(title, img):
 	print("\nShowing image: {}".format(title))
 	cv.namedWindow(title, cv.WINDOW_NORMAL)
@@ -54,5 +57,18 @@ def checkCoherent(q0, q1):
 
 	return True
 		
+def parseYamlFile(filename):
+    '''
+    Read the camera intrinsics, distortion coefficients, and some parameters for SfM pipeline.
+    '''
+    f = open(filename)
+    x = yaml.load(f)
+    f.close()
+
+    mtx = np.array(x['camera_matrix']['data'], dtype = np.float32)
+    low = x['depth_thresholds']['low']
+    high = x['depth_thresholds']['high']
+    return mtx.reshape(3,3), low, high
+
 if __name__ == "__main__":
 	print("In util.py")
