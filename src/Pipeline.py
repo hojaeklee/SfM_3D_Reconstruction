@@ -17,7 +17,9 @@ _intrinsic_array = np.array([524, 0, 316.7, 0, 524, 238.5, 0, 0, 1])
 _discoeff_array = np.array([0.2402, -0.6861, -0.0015, 0.0003])
 low_thresh = 400
 high_thresh = 8000
-
+'''
+_discoeff_array = np.array([0.2402, -0.6861, -0.0015, 0.0003])
+'''
 ## Bm1 and Harvard
 _intrinsic_array = np.array([570.34, 0, 320, 0, 570.34, 240, 0, 0, 1])
 low_thresh = 800 

@@ -1,0 +1,11 @@
+%YAML 1.0
+---
+camera_matrix:
+  rows: 3
+  cols: 3
+  dt: d
+  data: [ 570.34, 0., 320.0, 0.,
+       570.34, 240.0, 0., 0., 1. ]
+depth_thresholds:
+  low: 800
+  high: 40000

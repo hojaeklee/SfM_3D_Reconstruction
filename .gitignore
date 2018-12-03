@@ -4,5 +4,4 @@ cpp_tutorial/*
 *.pyc
 *.pcd
 *.png
-data/
 src/__pycache__
