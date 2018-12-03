@@ -2,32 +2,32 @@
 RGB-D structure from motion with DeMoN predicted Depth information. 
 
 # Roadmap
-- [ ] RGB-D SfM in python
-- [ ] Depth Estimation from DeMoN
+- [x] RGB-D SfM in python
+- [x] Depth Estimation from DeMoN
 - [ ] Combine the results
 - Enhancement: Integrate DeMoN pose estimation in place of Registration step
 
 # RGBD SFM Pipeline
 SFM standard pipeline:
 
-- Step 0: Load Images > Steven
-- Step 1: Feature Extraction > Steven
-- Step 2: Find Matching Pairs > Steven
-- Step 3: Registration > Steven
-- Step 4: Spanning Tree > Hojae
-- Step 5: Global Camera Poses > Hojae
-- Step 6: Find Clusters > Hojae
-- Step 7: Find CoM > Hojae
-- Step 8: Bundle Adjustment > Hojae
-- Viewer:
-- Util functions:
+- [x] Load Images > Steven
+- [x] Feature Extraction > Steven
+- [x] Find Matching Pairs > Steven
+- [x] Registration > Steven
+- [x] Spanning Tree > Hojae
+- [x] Global Camera Poses > Hojae
+- [x] Find Clusters > Hojae
+- [x] Find CoM > Hojae
+- [] Bundle Adjustment > TODO
+- [] Viewer: [x]createPointCloud, [x]saveCloud, [x]reduceCloud
+- [x] Util functions: as needed
 
 # DeMoN > Alex
 
-- Use pretrained weights (Filetype)
-- Collect test dataset
-- Calibration parameters (intrinsic & distortion)
-- Evaluate on test dataset
+- [x] Use pretrained weights (Filetype)
+- [ ] Collect test dataset: Waiting on kinect v1
+- [ ] Calibration parameters (intrinsic & distortion)
+- [x] Evaluate on test dataset
 
 # Running Demon
 ## Requirements

@@ -2,7 +2,6 @@ import os
 import re
 
 import numpy as np
-from skimage import img_as_float
 import cv2 as cv 
 from cv2 import xphoto
 

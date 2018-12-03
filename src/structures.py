@@ -8,18 +8,18 @@ Information related to RGB-D pair images
 class Image:
 	def __init__(self, index, time, rgb, gray, dep, rgb_path, dep_path):
 		self.index = index			# index of frame
-		self.time = time		# Time taken
-		self.rgb = rgb			# 1-channel cv::Mat containing rgb data
-		self.gray = gray		# 1-channel cv::Mat containing gray data
-		self.dep = dep			# 1-channel cv::Mat containing depth data
-		self.rgb_path = rgb_path 		# Path to rgb file
-		self.dep_path = dep_path 		# Path to depth file
+		self.time = time			# Time taken
+		self.rgb = rgb				# 1-channel cv::Mat containing rgb data
+		self.gray = gray			# 1-channel cv::Mat containing gray data
+		self.dep = dep				# 1-channel cv::Mat containing depth data
+		self.rgb_path = rgb_path 	# Path to rgb file
+		self.dep_path = dep_path 	# Path to depth file
 
 class CamFrame:
 	def __init__(self, index, key_points, depths):
-		self.index = index		# index of frame
+		self.index = index				# index of frame
 		self.key_points = key_points	# list of feature points found in this image
-		self.depths = depths		# lsit of depth values of features found in this image
+		self.depths = depths			# list of depth values of features found in this image
 
 class ImagePair:
 	def __init__(self, pair_index, matched_points, matched_indices, pair_depths, R = np.zeros((3, 3)), t = np.zeros((3, 1))):
