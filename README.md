@@ -10,10 +10,10 @@ We have tested this installation in Ubuntu 16.0.4 (LTS).
 
 1. Clone this directory: `git clone https://github.com/hojaeklee/SfM_3D_Reconstruction.git`
 2. Install dependencies by following the link:
-	* OpenCV 3.0.0 or OpenCV 3.1.1
-	* Point Cloud Library (PCL)
-	* Python Bindings for PCL
-	* Depth Motion Net (DeMoN)
+	* [OpenCV 3.0.0 or OpenCV 3.1.1](https://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/)
+	* [Point Cloud Library (PCL)](http://pointclouds.org/downloads/linux.html)
+	* [Python Bindings for PCL](https://github.com/strawlab/python-pcl)
+	* [Depth Motion Net (DeMoN)](https://github.com/lmb-freiburg/demon)
 
 
 ## Running the Pipeline
