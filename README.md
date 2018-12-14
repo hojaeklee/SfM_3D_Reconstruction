@@ -18,5 +18,5 @@ We have tested this installation in Ubuntu 16.0.4 (LTS).
 
 ## Running the Pipeline
 1. Descend into `src` folder by `cd src`.
-2. Run `python main.py -d ../data/dude_3dlab -f 3dlab_reconstruct`. This will run our pipeline on the RGBD images stored in the `dude_3dlab` folder, and create the `3dlab_reconstruct.pcd` file. Note `-d` specifies the path to images folder, and `-f` specifies the filename to save the Point Cloud Data (`.pcd`) file. The filename can be freely specified. 
-3. To visualize the 3D reconstruction (`.pcd` file), run `pcl_viewer 3dlab_reconstruct.pcd`.
+2. Run `python main.py -d ../data -f 3dreconstruct`. This will run our pipeline on the RGBD images stored in the `data` folder, and create the `3dreconstruct.pcd` file. Note `-d` specifies the path to images folder, and `-f` specifies the filename to save the Point Cloud Data (`.pcd`) file. The filename can be freely specified. 
+3. To visualize the 3D reconstruction (`.pcd` file), run `pcl_viewer 3dreconstruct.pcd`.
