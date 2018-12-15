@@ -185,6 +185,7 @@ echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
 source ~/.bashrc
 mkvirtualenv cv -p python3
 workon cv
+pip install numpy
 cd ~/opencv-3.1.0/
 mkdir build && cd build
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
@@ -210,19 +211,24 @@ Compile PCL 1.8.1 from source.
 - Also, ccmake required to configure the PCL installation.
 
 Download VTK-7.1.1 from here: https://www.vtk.org/files/release/7.1/VTK-7.1.1.tar.gz
-unzip the tar file
+```
+tar xvzf VTK-7.1.1.tar.gz
 cd VTK-7.1.1
 mkdir build && cd build
 cmake ..
 make -j4
+sudo make install
+```
 
 Download pcl-pcl-1.8.1 from here: https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.1.tar.gz
-unzip the tar file
+```
+tar xvzf pcl-pcl-1.8.1.tar.gz
 cd pcl-pcl-1.8.1
 mkdir build && cd build
 ccmake ..
 make -j4
-
+sudo make install
+```
 ## PCL with python (python-pcl)
 ```
 cd ~
