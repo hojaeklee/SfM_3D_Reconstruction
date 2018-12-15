@@ -162,11 +162,46 @@ sudo apt-get install libsuitesparse-dev
 sudo apt-get install libboost-all-dev
 sudo apt-get install freeglut3-dev
 sudo apt-get install doxygen
+sudo apt-get install cmake-curses-gui
 ```
 
 ## OpenCV3
 
 Followed the instructions [here](https://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/) to install version 3.1.0
+```
+cd ~
+wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.1.0.zip
+unzip opencv.zip
+wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.1.0.zip
+unzip opencv_contrib.zip
+cd ~
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
+sudo pip install virtualenv virtualenvwrapper
+sudo rm -rf ~/get-pip.py ~/.cache/pip
+echo -e "\n# virtualenv and virtualenvwrapper" >> ~/.bashrc
+echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
+echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
+source ~/.bashrc
+mkvirtualenv cv -p python3
+workon cv
+cd ~/opencv-3.1.0/
+mkdir build && cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D INSTALL_C_EXAMPLES=OFF \
+    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.1.0/modules \
+    -D PYTHON_EXECUTABLE=~/.virtualenvs/cv/bin/python \
+    -D BUILD_EXAMPLES=ON ..
+make -j4
+sudo make install
+sudo ldconfig
+cd /usr/local/lib/python3.5/site-packages/
+sudo mv cv2.cpython-35m-x86_64-linux-gnu.so cv2.so
+cd ~/.virtualenvs/cv/lib/python3.5/site-packages/
+ln -s /usr/local/lib/python3.5/site-packages/cv2.so cv2.so
+```
 
 ## PCL
 Compile PCL 1.8.1 from source. 
@@ -174,23 +209,36 @@ Compile PCL 1.8.1 from source.
 - Need to compile VTK from source too (Used VTK-7.1.1 due to OpenGL errors on parallels).
 - Also, ccmake required to configure the PCL installation.
 
+Download VTK-7.1.1 from here: https://www.vtk.org/files/release/7.1/VTK-7.1.1.tar.gz
+unzip the tar file
+cd VTK-7.1.1
+mkdir build && cd build
+cmake ..
+make -j4
+
+Download pcl-pcl-1.8.1 from here: https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.1.tar.gz
+unzip the tar file
+cd pcl-pcl-1.8.1
+mkdir build && cd build
+ccmake ..
+make -j4
+
 ## PCL with python (python-pcl)
 ```
+cd ~
 git clone https://github.com/strawlab/python-pcl.git
 pip install --upgrade pip
 pip install cython==0.25.2
 pip install numpy
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+cd $PKG_CONFIG_PATH
+```
+comment out `pcl_2d-1.8` in line 10 of pcl_features-1.8.pc
+```
+cd ~/python-pcl
 python setup.py build_ext -i
 python setup.py install
 ```
-If errors, either
-```
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-```
-or comment out dependency on pcl_2d-1.8 in PKG_CONFIG_PATH/pcl_features-1.8.pc
-
 ## Ceres
 Followed instructions [here](http://ceres-solver.org/installation.html#linux)
-Compile PCL 1.8.1 from source. Need to compile VTK from source too (Used VTK-7.1.1 due to OpenGL errors on parallels).
-Also, ccmake required to configure the PCL installation.
 

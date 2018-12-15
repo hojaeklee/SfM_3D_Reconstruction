@@ -6,7 +6,6 @@ import util
 
 class viewer:
 	def __init__(self, title, low_thresh = 400, high_thresh = 8000):
-		print("\nPCL")
 		self._title = title
 		self.low_thresh = low_thresh
 		self.high_thresh = high_thresh
@@ -23,6 +22,9 @@ class viewer:
 	def createPointCloud(self, images, poses, cameraMatrix):
 		## Fill cloud structure
 		# pcl_points = pcl.PointCloud()
+
+		print("\nCreating resulting point cloud...")
+		print("This may take a few minutes...")
 
 		## Per camera
 		pcl_p = pcl.PointCloud_PointXYZRGBA()
